@@ -1,4 +1,4 @@
-d-apache2-openssl-proxy-reverse:
+d-apache2-letsencrypt-proxy-reverse:
   ports:
   - 2222:22/tcp
   - 80:80/tcp
@@ -8,16 +8,52 @@ d-apache2-openssl-proxy-reverse:
     DWL_USER_PASSWD: dwl
     DWL_SSH_ACCESS: 'true'
     DWL_USER_ID: '1000'
-    DWL_USER_DNS: proxy-reverse-openssl.davaskweblimited.com
+    DWL_USER_DNS: proxy-reverse-letsencrypt.davaskweblimited.com
+    DWL_SSLKEY_C: EU
+    DWL_SSLKEY_ST: France
+    DWL_SSLKEY_L: Vannes
+    DWL_SSLKEY_O: davask web limited - docker container
+    DWL_SSLKEY_CN: davaskweblimited.com
+    DWL_CERTBOT_EMAIL: docker@davaskweblimited.com
   labels:
     io.rancher.scheduler.affinity:host_label: dwl=dwlComPrivate
   tty: true
-  hostname: proxy-reverse-openssl
-  image: davask/d-apache2-openssl-proxy-reverse:2.4-u14.04
+  hostname: proxy-reverse-letsencrypt.davaskweblimited.com
+  image: davask/d-apache2-letsencrypt-proxy-reverse:2.4-u14.04
   volumes:
   - /home/dwl/projects/factory/docker-dev/files:/home/dwl/files
   - /home/dwl/projects/factory/docker-dev/sites-available:/etc/apache2/sites-available
   - /home/dwl/projects/factory/docker-dev/ssl:/etc/apache2/ssl
+  - /home/dwl/projects/factory/docker-dev/letsencrypt:/etc/letsencrypt
+  stdin_open: true
+
+d-apache2-letsencrypt:
+  ports:
+  - 65505:22/tcp
+  - 65506:80/tcp
+  - 443:443/tcp
+  environment:
+    DWL_USER_NAME: dwl
+    DWL_USER_PASSWD: dwl
+    DWL_SSH_ACCESS: 'true'
+    DWL_USER_ID: '1000'
+    DWL_USER_DNS: letsencrypt.davaskweblimited.com
+    DWL_SSLKEY_C: EU
+    DWL_SSLKEY_ST: France
+    DWL_SSLKEY_L: Vannes
+    DWL_SSLKEY_O: davask web limited - docker container
+    DWL_SSLKEY_CN: davaskweblimited.com
+    DWL_CERTBOT_EMAIL: docker@davaskweblimited.com
+  labels:
+    io.rancher.scheduler.affinity:host_label: dwl=dwlComPrivate
+  tty: true
+  hostname: letsencrypt.davaskweblimited.com
+  image: davask/d-apache2-letsencrypt:2.4-u14.04
+  volumes:
+  - /home/dwl/projects/factory/docker-dev/files:/home/dwl/files
+  - /home/dwl/projects/factory/docker-dev/sites-available:/etc/apache2/sites-available
+  - /home/dwl/projects/factory/docker-dev/ssl:/etc/apache2/ssl
+  - /home/dwl/projects/factory/docker-dev/letsencrypt:/etc/letsencrypt
   stdin_open: true
 
 d-apache2-openssl:
@@ -31,6 +67,11 @@ d-apache2-openssl:
     DWL_SSH_ACCESS: 'true'
     DWL_USER_ID: '1000'
     DWL_USER_DNS: openssl.davaskweblimited.com
+    DWL_SSLKEY_C: EU
+    DWL_SSLKEY_ST: France
+    DWL_SSLKEY_L: Vannes
+    DWL_SSLKEY_O: davask web limited - docker container
+    DWL_SSLKEY_CN: davaskweblimited.com
   labels:
     io.rancher.scheduler.affinity:host_label: dwl=dwlComPrivate
   tty: true
