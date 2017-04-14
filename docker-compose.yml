@@ -10,6 +10,7 @@ d-apache-letsencrypt-proxy-reverse:
     DWL_LOCAL_LANG: en_US:en
     DWL_USER_NAME: username
     DWL_SSH_ACCESS: 'true'
+    DWL_SHIELD_HTTP: 'false'
     DWL_SSLKEY_C: EU
     DWL_SSLKEY_ST: France
     DWL_SSLKEY_L: Vannes
@@ -17,15 +18,14 @@ d-apache-letsencrypt-proxy-reverse:
     DWL_SSLKEY_CN: davaskweblimited.com
     DWL_CERTBOT_EMAIL: docker@davaskweblimited.com
     DWL_CERTBOT_DEBUG: false
-  log_driver: syslog
-  labels:
-    io.rancher.scheduler.affinity:host_label: dwl=dwlComPrivate
   image: davask/d-apache-letsencrypt-proxy-reverse:2.4-u14.04
-  hostname: private.davaskweblimited.com
+  hostname: localhost
+  net: bridge
   volumes:
-  - /home/dwl/docker-images/proxy/d-apache-letsencrypt-proxy-reverse/volumes/home/username/files:/home/username/files
-  - /home/dwl/docker-images/proxy/d-apache-letsencrypt-proxy-reverse/volumes/home/username/http/app/sites-available:/etc/apache2/sites-available
-  - /home/dwl/docker-images/proxy/d-apache-letsencrypt-proxy-reverse/volumes/etc/apache2/ssl:/etc/apache2/ssl
   - /home/dwl/docker-images/proxy/d-apache-letsencrypt-proxy-reverse/build/etc/letsencrypt:/etc/letsencrypt
+  - /home/dwl/docker-images/proxy/d-apache-letsencrypt-proxy-reverse/build/etc/apache2/ssl:/etc/apache2/ssl
+  - /home/dwl/docker-images/proxy/d-apache-letsencrypt-proxy-reverse/volumes/proxy/log/localhost/apache2:/var/log/apache2
+  - /home/dwl/docker-images/proxy/d-apache-letsencrypt-proxy-reverse/volumes/home/username/http/app/sites-available:/etc/apache2/sites-available
+  - /home/dwl/docker-images/proxy/d-apache-letsencrypt-proxy-reverse/volumes/home/username/files:/home/username/files
   working_dir: /var/www/html
 
