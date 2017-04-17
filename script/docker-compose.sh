@@ -28,7 +28,7 @@ echo "d-apache-letsencrypt-proxy-reverse:
     DWL_SSLKEY_O: davask web limited - docker container
     DWL_SSLKEY_CN: davaskweblimited.com
     DWL_CERTBOT_EMAIL: docker@davaskweblimited.com
-    DWL_CERTBOT_DEBUG: false
+    DWL_CERTBOT_DEBUG: 'false'
   image: davask/d-apache-letsencrypt-proxy-reverse:${branch}
   hostname: localhost
   net: bridge
