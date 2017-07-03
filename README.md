@@ -54,7 +54,14 @@
 
 ## virtualhost automatic conf
 
+```bash
 
+# ServerAdmin
+# DocumentRoot
+# ServerName
+# ServerAlias
+
+```
 
 
 - [test certificat](# https://www.ssllabs.com/ssltest/analyze.html?d=<sub.domain.tld>&latest
